@@ -1,0 +1,30 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
+
+@import "@angular/material/prebuilt-themes/deeppurple-amber.css";
+
+
+/* styles.css or component CSS file */
+body {
+    background-color: #0d1117; /* Dark background */
+    color: white;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .resume-card {
+    background: #161b22; /* Darker card */
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+  }
+  

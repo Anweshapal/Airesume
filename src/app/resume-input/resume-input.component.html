@@ -1,0 +1,166 @@
+<div class="container">
+  <!-- Description Box (Hidden after resume generation) -->
+  <div class="description-box" *ngIf="!isGenerated && !showTemplate">
+    <mat-card class="resume-card">
+      <h2>
+        <mat-icon class="icon">psychology</mat-icon> AI Resume Generator
+      </h2>
+      <p>Enter a detailed description about yourself to generate your professional resume.</p>
+
+      <!-- Description Input -->
+      <mat-form-field appearance="fill" class="full-width">
+        <textarea
+          matInput
+          placeholder="Type your description here..."
+          rows="6"
+          [(ngModel)]="description"
+        ></textarea>
+      </mat-form-field>
+
+      <!-- Action Buttons -->
+      <div class="button-group">
+        <button mat-flat-button color="accent" (click)="generateResume()" [disabled]="!description.trim()">
+          <mat-icon>send</mat-icon> Generate Resume
+        </button>
+        <button mat-flat-button color="warn" (click)="clearDescription()">
+          <mat-icon>delete</mat-icon> Clear
+        </button>
+      </div>
+    </mat-card>
+  </div>
+
+  <!-- Resume Form (Visible after resume generation) -->
+<div class="resume-form-container" *ngIf="isGenerated">
+  <mat-card class="resume-form">
+    <h2>📄 Resume Form</h2>
+
+    <!-- Personal Information -->
+    <div class="form-grid">
+      <mat-form-field appearance="outline">
+        <input matInput [(ngModel)]="resume.fullName" placeholder="Enter your name" required />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <input matInput [(ngModel)]="resume.email" placeholder="Enter your email" required />
+      </mat-form-field>
+    </div>
+
+    <div class="form-grid">
+      <mat-form-field appearance="outline">
+        <input matInput [(ngModel)]="resume.phoneNumber" placeholder="Phone Number" required />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <input matInput [(ngModel)]="resume.location" placeholder="Location" />
+      </mat-form-field>
+    </div>
+
+    <!-- Links -->
+    <div class="form-grid">
+      <mat-form-field appearance="outline">
+        <input matInput [(ngModel)]="resume.github" placeholder="GitHub URL" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <input matInput [(ngModel)]="resume.linkedin" placeholder="LinkedIn URL" />
+      </mat-form-field>
+    </div>
+
+    <!-- Education Section -->
+    <h3>Education</h3>
+    <div *ngFor="let edu of resume.education; let i = index">
+      <mat-form-field appearance="outline">
+        <input matInput [(ngModel)]="edu.degree" placeholder="Degree" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <input matInput [(ngModel)]="edu.institution" placeholder="Institution" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <input matInput [(ngModel)]="edu.cgpa" placeholder="CGPA" />
+      </mat-form-field>
+
+      <button mat-icon-button color="warn" (click)="removeEducation(i)" *ngIf="resume.education.length > 1">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+
+    <button mat-flat-button color="primary" (click)="addEducation()">
+      <mat-icon>add</mat-icon> Add Education
+    </button>
+
+    <!-- Experience Section -->
+    <h3>Experience</h3>
+    <div *ngFor="let exp of resume.experience; let i = index">
+      <mat-form-field appearance="outline">
+        <input matInput [(ngModel)]="exp.title" placeholder="Job Role" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <input matInput [(ngModel)]="exp.company" placeholder="Company Name" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <textarea matInput [(ngModel)]="exp.description" placeholder="Describe your role"></textarea>
+      </mat-form-field>
+
+      <button mat-icon-button color="warn" (click)="removeExperience(i)" *ngIf="resume.experience.length > 1">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+
+    <button mat-flat-button color="primary" (click)="addExperience()">
+      <mat-icon>add</mat-icon> Add Experience
+    </button>
+
+    <!-- Projects Section -->
+    <h3>Projects</h3>
+    <div *ngFor="let proj of resume.projects; let i = index">
+      <mat-form-field appearance="outline">
+        <input matInput [(ngModel)]="proj.title" placeholder="Project Name" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <textarea matInput [(ngModel)]="proj.description" placeholder="Project Description"></textarea>
+      </mat-form-field>
+
+      <button mat-icon-button color="warn" (click)="removeProject(i)" *ngIf="resume.projects.length > 1">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+
+    <button mat-flat-button color="primary" (click)="addProject()">
+      <mat-icon>add</mat-icon> Add Project
+    </button>
+
+    <!-- Summary -->
+    <mat-form-field class="full-width" appearance="outline">
+      <textarea matInput [(ngModel)]="resume.summary" placeholder="Summary"></textarea>
+    </mat-form-field>
+
+    <!-- Skills -->
+    <mat-form-field class="full-width" appearance="outline">
+      <textarea matInput [(ngModel)]="resume.languages" placeholder="Languages (comma-separated)"></textarea>
+    </mat-form-field>
+
+    <!-- Certifications -->
+    <mat-form-field class="full-width" appearance="outline">
+      <textarea matInput [(ngModel)]="resume.certifications" placeholder="Certifications"></textarea>
+    </mat-form-field>
+
+    <!-- Action Buttons -->
+    <div class="button-group">
+      <button mat-flat-button color="primary" (click)="submitResume()">
+        <mat-icon>check_circle</mat-icon> Submit Resume
+      </button>
+
+      <button mat-flat-button color="warn" (click)="clearDescription()">
+        <mat-icon>delete</mat-icon> Clear Form
+      </button>
+    </div>
+  </mat-card>
+</div>
+
+<!-- Resume Template -->
+<app-resume-template *ngIf="showTemplate" [resume]="resume"></app-resume-template>
